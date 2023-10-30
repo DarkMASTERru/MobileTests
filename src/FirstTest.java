@@ -269,7 +269,7 @@ public class FirstTest {
     }
 
     private WebElement waitForElementAndClick(By by, String error_message, long timeoutInSeconds) {
-        WebElement element = waitForElementPresent(by, error_message, 5);
+        WebElement element = waitForElementPresent(by, error_message, timeoutInSeconds);
         element.click();
         return element;
     }
