@@ -222,13 +222,37 @@ public class FirstTest {
                 15
         );
 
-
         swipeUpToFindElement(
                 By.xpath("//android.widget.TextView[@text='View article in browser']"),
-                "Test error message",
+                "Cannot find the end of the article",
                 20
         );
 
+    }
+
+    @Test
+    public void saveFirstArticleToMyList()
+    {
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+                "Cannot find search input",
+                5
+        );
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/search_src_text"),
+                "Java",
+                "Cannot find search input",
+                5
+        );
+        waitForElementAndClick(
+                By.xpath("//*[@resource-id='org.wikipedia:id/search_results_list']//*[@text='Object-oriented programming language']"),
+                "Cannot find element",
+                5
+        );
+
+//        waitForElementAndClick(
+//                By.xpath("")
+//        )
     }
 
     private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds) {
@@ -251,7 +275,7 @@ public class FirstTest {
     }
 
     private WebElement waitForElementAndSendKeys(By by, String value, String error_message, long timeoutInSeconds) {
-        WebElement element = waitForElementPresent(by, error_message, 5);
+        WebElement element = waitForElementPresent(by, error_message, timeoutInSeconds);
         element.sendKeys(value);
         return element;
     }
@@ -265,7 +289,7 @@ public class FirstTest {
     }
 
     private WebElement waitForElementAndClear(By by, String error_message, long timeoutIsSeconds) {
-        WebElement element = waitForElementPresent(by, error_message, 5);
+        WebElement element = waitForElementPresent(by, error_message, timeoutIsSeconds);
         element.clear();
         return element;
     }
@@ -312,7 +336,8 @@ public class FirstTest {
         while (driver.findElements(by).size() == 0){
             if (already_swiped > max_swipes)
             {
-                waitForElementPresent(by, "Cannot find element by swiping up. \n" + error_message);
+                waitForElementPresent(by, "Cannot find element by swiping up. \n" + error_message, 0);
+                return;
             }
             swipeUpQuick();
             ++already_swiped;
