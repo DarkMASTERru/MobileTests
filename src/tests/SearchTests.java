@@ -8,6 +8,13 @@ import org.openqa.selenium.By;
 
 public class SearchTests extends CoreTestCase
 {
+    private lib.ui.MainPageObject MainPageObject;
+    protected void setUp() throws Exception
+    {
+        super.setUp();
+
+        MainPageObject = new MainPageObject(driver);
+    }
     @Test
     public void testSearch() {
         SearchPageObject SearchPageObject = new SearchPageObject(driver);
@@ -56,14 +63,14 @@ public class SearchTests extends CoreTestCase
         SearchPageObject.waitForSearchREsult("Object-oriented programming language");
 
         assertTrue("Not find search pages",
-                MainPageObject.quantityElements(By.xpath("//*[contains(@text, 'Java')]")).size() > 1);
+                MainPageObject.quantityElements("xpath//*[contains(@text, 'Java')]").size() > 1);
 
         SearchPageObject.pressClearAreaButton();
 
         SearchPageObject.articleNotPresent("Java");
 
         assertTrue("Results are present",
-                MainPageObject.quantityElements(By.xpath("//*[contains(@text, 'Java')]")).size() == 0);
+                MainPageObject.quantityElements("xpath//*[contains(@text, 'Java')]").size() == 0);
 
     }
 

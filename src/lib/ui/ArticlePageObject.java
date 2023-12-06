@@ -6,14 +6,14 @@ import org.openqa.selenium.WebElement;
 public class ArticlePageObject extends  MainPageObject{
 
     private static final String
-        TITLE = "//*[@resource-id='pcs-edit-section-title-description']/../android.widget.TextView[1]",
-        FOOTER_ELEMENT = "//android.widget.TextView[@text='View article in browser']",
-        PAGE_SAVE = "org.wikipedia:id/page_save",
-        SNACKBAR_ACTION = "org.wikipedia:id/snackbar_action",
-        MY_LIST_NAME_INPUT = "org.wikipedia:id/text_input",
-        MY_LIST_OK_BUTTON = "//*[@text = 'OK']",
-        CLOSE_ARTICLE_BUTTON = "//*[@content-desc = 'Navigate up']",
-        DESCRIPTION = "//*[@resource-id='pcs-edit-section-title-description']";
+        TITLE = "xpath://*[@resource-id='pcs-edit-section-title-description']/../android.widget.TextView[1]",
+        FOOTER_ELEMENT = "xpath://android.widget.TextView[@text='View article in browser']",
+        PAGE_SAVE = "id:org.wikipedia:id/page_save",
+        SNACKBAR_ACTION = "id:org.wikipedia:id/snackbar_action",
+        MY_LIST_NAME_INPUT = "id:org.wikipedia:id/text_input",
+        MY_LIST_OK_BUTTON = "xpath://*[@text = 'OK']",
+        CLOSE_ARTICLE_BUTTON = "xpath://*[@content-desc = 'Navigate up']",
+        DESCRIPTION = "xpath://*[@resource-id='pcs-edit-section-title-description']";
 
 
     public ArticlePageObject(AppiumDriver driver)
@@ -23,7 +23,7 @@ public class ArticlePageObject extends  MainPageObject{
 
     public WebElement waitForTitleElement()
     {
-        return this.waitForElementPresent(By.xpath(TITLE), "Cannot find article title on page!", 15);
+        return this.waitForElementPresent(TITLE, "Cannot find article title on page!", 15);
     }
 
     public String getArticleTitle()
@@ -35,7 +35,7 @@ public class ArticlePageObject extends  MainPageObject{
     public void swipeToFooter()
     {
         this.swipeUpToFindElement(
-                By.xpath(FOOTER_ELEMENT),
+                FOOTER_ELEMENT,
                 "Cannot find the end of article",
                 20
         );
@@ -44,26 +44,26 @@ public class ArticlePageObject extends  MainPageObject{
     {
 
         this.waitForElementAndClick(
-                By.id(PAGE_SAVE),
+                PAGE_SAVE,
                 "Cannot find button to save article",
                 5
         );
 
         this.waitForElementAndClick(
-                By.id(SNACKBAR_ACTION),
+                SNACKBAR_ACTION,
                 "Cannot find button for add to list",
                 5
         );
 
         this.waitForElementAndSendKeys(
-                By.id(MY_LIST_NAME_INPUT),
+                MY_LIST_NAME_INPUT,
                 name_of_folder,
                 "Cannot find name list input",
                 5
         );
 
         this.waitForElementAndClick(
-                By.xpath(MY_LIST_OK_BUTTON),
+                MY_LIST_OK_BUTTON,
                 "Cannot find OK button",
                 5
         );
@@ -73,25 +73,25 @@ public class ArticlePageObject extends  MainPageObject{
     {
 
         this.waitForElementAndClick(
-                By.id(PAGE_SAVE),
+                PAGE_SAVE,
                 "Cannot find button to save article",
                 5
         );
 
         this.waitForElementAndClick(
-                By.id(SNACKBAR_ACTION),
+                SNACKBAR_ACTION,
                 "Cannot find button for add to list",
                 5
         );
 
         this.waitForElementAndClick(
-                By.xpath("//*[@text='" + name_of_folder + "']"),
+                "xpath://*[@text='" + name_of_folder + "']",
                 "Cannot find list for save",
                 5
         );
 
         this.waitForElementAndClick(
-                By.id(SNACKBAR_ACTION),
+                SNACKBAR_ACTION,
                 "Cannot find button for add to list",
                 5
         );
@@ -100,7 +100,7 @@ public class ArticlePageObject extends  MainPageObject{
     {
 
         this.waitForElementAndClick(
-                By.xpath(CLOSE_ARTICLE_BUTTON),
+                CLOSE_ARTICLE_BUTTON,
                 "Cannot find button to save article",
                 5
         );
@@ -108,7 +108,7 @@ public class ArticlePageObject extends  MainPageObject{
     public WebElement descriptionOfArticle()
     {
         WebElement search_element = this.waitForElementPresent(
-                By.xpath(DESCRIPTION),
+                DESCRIPTION,
                 "Cannot find search field",
                 15
         );

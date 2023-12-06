@@ -6,9 +6,10 @@ import org.openqa.selenium.By;
 public class NavigationUi extends  MainPageObject{
 
     private static final String
-            PAGE_SAVE = "org.wikipedia:id/page_save",
-            SNACKBAR_ACTION = "org.wikipedia:id/snackbar_action",
-            BACK_BUTTON = "//android.widget.ImageButton[@content-desc=\"Navigate up\"]";
+            PAGE_SAVE = "id:org.wikipedia:id/page_save",
+            SNACKBAR_ACTION = "id:org.wikipedia:id/snackbar_action",
+            BACK_BUTTON = "xpath://android.widget.ImageButton[@content-desc='Navigate up']",
+            REMOVE_FROM_ELEMENT = "xpath://*[contains(@text, 'Remove from')]";
     public NavigationUi(AppiumDriver driver) {
         super(driver);
     }
@@ -16,7 +17,7 @@ public class NavigationUi extends  MainPageObject{
     public void clickPageSave()
     {
         this.waitForElementAndClick(
-                By.id(PAGE_SAVE),
+                PAGE_SAVE,
                 "Cannot find button to save article",
                 5
         );
@@ -25,7 +26,7 @@ public class NavigationUi extends  MainPageObject{
     public void clickSnackbarAction()
     {
         this.waitForElementAndClick(
-                By.id(SNACKBAR_ACTION),
+                SNACKBAR_ACTION,
                 "Cannot find view list",
                 5
         );
@@ -34,7 +35,7 @@ public class NavigationUi extends  MainPageObject{
     public void clickRemoveFromList()
     {
         this.waitForElementAndClick(
-                By.xpath("//*[contains(@text, 'Remove from')]"),
+                REMOVE_FROM_ELEMENT,
                 "Cannot find list for delete article",
                 5
         );
@@ -42,7 +43,7 @@ public class NavigationUi extends  MainPageObject{
     public void backButton()
     {
         this.waitForElementAndClick(
-                By.xpath(BACK_BUTTON),
+                BACK_BUTTON,
                 "Cannot find back button",
                 5
         );
