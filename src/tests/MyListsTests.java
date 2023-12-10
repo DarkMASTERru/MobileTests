@@ -3,66 +3,82 @@ package tests;
 import lib.CoreTestCase;
 import lib.ui.*;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
+import lib.ui.factories.SearchPageObjectFactory;
+import lib.ui.factories.ArticlePageObjectFactory;
+import lib.ui.factories.NavigationUIFactory;
+import lib.ui.factories.MyListsPageObjectFactory;
 
 public class MyListsTests extends CoreTestCase
 {
     @Test
     public void testSaveFirstArticleToMyList()
     {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
+        ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
+        NavigationUi NavigationUi = NavigationUIFactory.get(driver);
+        MyListsPageObject MyListsPageObject = MyListsPageObjectFactory.get(driver);
+
         SearchPageObject.clickSkipButton();
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLines("Java");
         SearchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+
         ArticlePageObject.waitForTitleElement();
         String article_title = ArticlePageObject.getArticleTitle();
         String name_of_folder = "Test_list";
-        NavigationUi NavigationUi = new NavigationUi(driver);
         ArticlePageObject.addArticleToMyList(name_of_folder);
         NavigationUi.clickSnackbarAction();
-        MyListsPageObject MyListsPageObject = new MyListsPageObject(driver);
         MyListsPageObject.swipeByArticleToDelete(article_title);
     }
 
     @Test
     public void testSaveTwoArticleAndDeleteOne() {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        String searchWord = "Java";
+        String name_of_folder = "Test_list";
+        String firstArticleTitle = "Object-oriented programming language";
+        String secondArticleTitle = "Island in Indonesia";
 
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.clickSkipButton();
         SearchPageObject.initSearchInput();
-        SearchPageObject.typeSearchLines("Java");
-        SearchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
-        ArticlePageObject.waitForTitleElement();
-        String name_of_folder = "Test_list";
+        SearchPageObject.typeSearchLines(searchWord);
+        SearchPageObject.clickByArticleWithSubstring(firstArticleTitle);
 
-        NavigationUi NavigationUi = new NavigationUi(driver);
+        ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
 
-        ArticlePageObject.addArticleToMyList(name_of_folder);
+        if (Platform.getInstance().isAndroid()) {
+            ArticlePageObject.addArticleToMyList(name_of_folder);
+        } else {
+            ArticlePageObject.waitForTitleElement(firstArticleTitle);
+            ArticlePageObject.addArticleToMySaved();
+        }
 
-
-        MyListsPageObject MyListsPageObject = new MyListsPageObject(driver);
-
+        NavigationUi NavigationUi = NavigationUIFactory.get(driver);
         NavigationUi.backButton();
-        SearchPageObject.clickByArticleWithSubstring("Island in Indonesia");
+        SearchPageObject.clickByArticleWithSubstring(secondArticleTitle);
 
-        ArticlePageObject.addArticleToMyExistingList(name_of_folder);
+        if (Platform.getInstance().isAndroid()) {
+            ArticlePageObject.addArticleToMyExistingList(name_of_folder);
+        } else {
+            ArticlePageObject.waitForTitleElement(secondArticleTitle);
+            ArticlePageObject.addArticleToMySaved();
+        }
+        MyListsPageObject MyListsPageObject = MyListsPageObjectFactory.get(driver);
 
-        MyListsPageObject.waitForArticleToAppearByTitle("Java (programming language)");
-        MyListsPageObject.swipeByArticleToDelete("Java (programming language)");
+        MyListsPageObject.waitForArticleToAppearByTitle(firstArticleTitle);
+        MyListsPageObject.swipeByArticleToDelete(firstArticleTitle);
 
-        MyListsPageObject.waitForArticleToAppearByTitle("Java");
-        MyListsPageObject.clickArticleToMyList("Java");
+        MyListsPageObject.waitForArticleToAppearByTitle(searchWord);
+        MyListsPageObject.clickArticleToMyList(searchWord);
 
-
-        MainPageObject.assertElementHasText(
-                ArticlePageObject.descriptionOfArticle(),
-                "Island in Indonesia",
-                "Take another text"
-        );
+        if (Platform.getInstance().isAndroid()) {
+            MainPageObject.assertElementHasText(
+                    ArticlePageObject.descriptionOfArticle(),
+                    secondArticleTitle,
+                    "Take another text"
+            );
+        } else {
+            ArticlePageObject.waitForTitleElement(secondArticleTitle);
+        }
     }
-
 }

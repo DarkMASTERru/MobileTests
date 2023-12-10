@@ -5,14 +5,15 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public class SearchPageObject extends MainPageObject{
+public abstract class SearchPageObject extends MainPageObject{
 
-    private static final String
-            SEARCH_INIT_ELEMENT = "xpath://*[contains(@text, 'Search Wikipedia')]",
-            SEARCH_INPUT = "xpath://*[contains(@text, 'Search Wikipedia')]",
-            SEARCH_RESULT_BY_SUBSTRING_TPL = "xpath://*[@resource-id='org.wikipedia:id/page_list_item_description' and @text='{SUBSTRING}']",
-            SEARCH_TITLE_DESCRIPTION_ELEMENT = "xpath://*[android.widget.TextView[@index=0 and @text='{TITLE}'] and android.widget.TextView[@index=1 and @text='{DESCRIPTION}']]",
-            SEARCH_ARTICLES_RETURNED_ELEMENT = "id:org.wikipedia:id/page_list_item_title";;
+    protected static String
+            SEARCH_INIT_ELEMENT,
+            SEARCH_INPUT,
+            SEARCH_RESULT_BY_SUBSTRING_TPL,
+            SEARCH_TITLE_DESCRIPTION_ELEMENT,
+            SEARCH_ARTICLES_RETURNED_ELEMENT,
+            SEARCH_CANCEL_BUTTON;
 
     public SearchPageObject(AppiumDriver driver)
     {
@@ -114,5 +115,11 @@ public class SearchPageObject extends MainPageObject{
 
         int actual_number_of_articles_returned = this.getAmmountOfElements(SEARCH_ARTICLES_RETURNED_ELEMENT);
         Assert.assertTrue("less than " + count + " articles found",actual_number_of_articles_returned >= count == true);
+    }
+
+    public void clickCancelSearch() {
+        this.waitForElementAndClick(SEARCH_CANCEL_BUTTON,
+                "Cannot find and click search cancel button",
+                5);
     }
 }

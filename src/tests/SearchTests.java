@@ -4,6 +4,7 @@ import lib.CoreTestCase;
 import lib.ui.MainPageObject;
 import lib.ui.SearchPageObject;
 import org.junit.Test;
+import lib.ui.factories.SearchPageObjectFactory;
 import org.openqa.selenium.By;
 
 public class SearchTests extends CoreTestCase
@@ -17,7 +18,7 @@ public class SearchTests extends CoreTestCase
     }
     @Test
     public void testSearch() {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
         SearchPageObject.clickSkipButton();
         SearchPageObject.initSearchInput();
@@ -27,7 +28,7 @@ public class SearchTests extends CoreTestCase
 
     @Test
     public void testCancelSearch() {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
         SearchPageObject.clickSkipButton();
         SearchPageObject.initSearchInput();
@@ -42,7 +43,7 @@ public class SearchTests extends CoreTestCase
     @Test
     public void testAssertElementHasText() {
 
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
         MainPageObject.assertElementHasText(
                 SearchPageObject.returnSearchFieldTitle(),
@@ -53,7 +54,7 @@ public class SearchTests extends CoreTestCase
 
     @Test
     public void testCancelSearchWithResults_Ex3_Ex4() {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.clickSkipButton();
 
         SearchPageObject.initSearchInput();
@@ -77,7 +78,7 @@ public class SearchTests extends CoreTestCase
     @Test
     public void testSearchBy2Substrings() {
 
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.clickSkipButton();
 
         SearchPageObject.initSearchInput();

@@ -4,20 +4,21 @@ import lib.CoreTestCase;
 import lib.ui.ArticlePageObject;
 import lib.ui.SearchPageObject;
 import org.junit.Test;
+import lib.ui.factories.SearchPageObjectFactory;
+import lib.ui.factories.ArticlePageObjectFactory;
 
 public class ChangeAppConditionTests extends CoreTestCase
 {
     @Test
     public void testChangeOrientationOnSearchResult()
     {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
+        ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
 
         SearchPageObject.clickSkipButton();
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLines("Java");
         SearchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
-
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
 
         String title_before_rotation = ArticlePageObject.getArticleTitle();
 
@@ -45,7 +46,7 @@ public class ChangeAppConditionTests extends CoreTestCase
     @Test
     public void testChechSearchArticleBackground()
     {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
         SearchPageObject.clickSkipButton();
         SearchPageObject.initSearchInput();

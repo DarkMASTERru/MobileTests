@@ -1,11 +1,10 @@
 package tests;
 
 import lib.CoreTestCase;
-import lib.ui.ArticlePageObject;
-import lib.ui.MainPageObject;
-import lib.ui.SearchPageObject;
+import lib.ui.*;
 import org.junit.Test;
-import org.openqa.selenium.By;
+import lib.ui.factories.SearchPageObjectFactory;
+import lib.ui.factories.ArticlePageObjectFactory;
 
 public class ArticleTests extends CoreTestCase
 {
@@ -18,15 +17,14 @@ public class ArticleTests extends CoreTestCase
     }
     @Test
     public void testCompareArticleTitle() {
-
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
+        ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
 
         SearchPageObject.clickSkipButton();
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLines("Java");
         SearchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
 
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
         String article_title = ArticlePageObject.getArticleTitle();
 
         assertEquals(
@@ -38,23 +36,26 @@ public class ArticleTests extends CoreTestCase
 
     @Test
     public void testSwipeArticle() {
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
+        ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
 
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
         SearchPageObject.clickSkipButton();
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLines("Appium");
 
         SearchPageObject.clickByArticleWithSubstring("Automation for Apps");
 
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
         ArticlePageObject.waitForTitleElement();
         ArticlePageObject.swipeToFooter();
 
     }
+
+
+
     @Test
     public void testAssertTittle()
     {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.clickSkipButton();
         SearchPageObject.initSearchInput();
 

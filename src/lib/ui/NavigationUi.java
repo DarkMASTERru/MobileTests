@@ -3,13 +3,13 @@ package lib.ui;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 
-public class NavigationUi extends  MainPageObject{
+public abstract class NavigationUi extends  MainPageObject{
 
-    private static final String
-            PAGE_SAVE = "id:org.wikipedia:id/page_save",
-            SNACKBAR_ACTION = "id:org.wikipedia:id/snackbar_action",
-            BACK_BUTTON = "xpath://android.widget.ImageButton[@content-desc='Navigate up']",
-            REMOVE_FROM_ELEMENT = "xpath://*[contains(@text, 'Remove from')]";
+    protected static String
+            PAGE_SAVE,
+            SNACKBAR_ACTION,
+            BACK_BUTTON,
+            REMOVE_FROM_ELEMENT;
     public NavigationUi(AppiumDriver driver) {
         super(driver);
     }
