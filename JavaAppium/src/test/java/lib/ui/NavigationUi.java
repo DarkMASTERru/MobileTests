@@ -1,5 +1,6 @@
 package lib.ui;
 
+import io.qameta.allure.Step;
 import lib.Platform;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -18,6 +19,7 @@ public abstract class NavigationUi extends  MainPageObject{
         super(driver);
     }
 
+    @Step("Click PageSave button")
     public void clickPageSave()
     {
         this.waitForElementAndClick(
@@ -27,6 +29,7 @@ public abstract class NavigationUi extends  MainPageObject{
         );
     }
 
+    @Step("Click snackbar action")
     public void clickSnackbarAction()
     {
         this.waitForElementAndClick(
@@ -36,6 +39,7 @@ public abstract class NavigationUi extends  MainPageObject{
         );
     }
 
+    @Step("Click remove from list")
     public void clickRemoveFromList()
     {
         this.waitForElementAndClick(
@@ -44,6 +48,7 @@ public abstract class NavigationUi extends  MainPageObject{
                 5
         );
     }
+    @Step("Click back button")
     public void backButton()
     {
         this.waitForElementAndClick(
@@ -53,6 +58,7 @@ public abstract class NavigationUi extends  MainPageObject{
         );
     }
 
+    @Step("Opening navigation panel")
     public void openNavigation() {
         if (Platform.getInstance().isMW()) {
             this.waitForElementAndClick(OPEN_NAVIGATION,
@@ -77,6 +83,7 @@ public abstract class NavigationUi extends  MainPageObject{
         }
     }
 
+    @Step("Returning from search results page to main page")
     public void returnFromSearchResultsToMainPage(){
         //возвращаюсь со страницы результатов поиска на главную страницу
         this.waitForElementAndClick(NAVIGATE_TO_MAIN_PAGE_BUTTON,
@@ -84,6 +91,7 @@ public abstract class NavigationUi extends  MainPageObject{
                 5);
     }
 
+    @Step("Clicking Saved lists button")
     public void clickSavedLists(){
         //click Saved button on navigation panel
         if (Platform.getInstance().isMW()) {

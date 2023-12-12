@@ -1,5 +1,6 @@
 package lib.ui;
 
+import io.qameta.allure.Step;
 import lib.Platform;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -30,6 +31,8 @@ public abstract class MyListsPageObject extends MainPageObject{
     public MyListsPageObject(RemoteWebDriver driver) {
         super(driver);
     }
+
+    @Step("Opening folder by its name")
     public void openFolderByName(String name_of_folder)
     {
         String folder_name_xpath = getFolderXpathByName(name_of_folder);
@@ -40,6 +43,7 @@ public abstract class MyListsPageObject extends MainPageObject{
         );
     }
 
+    @Step("Checking article, defined by title, is present")
     public void waitForArticleToAppearByTitle(String article_title)
     {
         String article_xpath = getSavedArticleXpathByTitle(article_title);
@@ -50,6 +54,7 @@ public abstract class MyListsPageObject extends MainPageObject{
         );
     }
 
+    @Step("Refresh page")
     public void refreshPage()
     {
         try {
@@ -60,6 +65,7 @@ public abstract class MyListsPageObject extends MainPageObject{
         driver.navigate().refresh();
     }
 
+    @Step("Wait for article to disappear by title")
     public void waitForArticleToDisappearByTitle(String article_title)
     {
         String article_xpath = getSavedArticleXpathByTitle(article_title);
@@ -70,6 +76,7 @@ public abstract class MyListsPageObject extends MainPageObject{
         );
     }
 
+    @Step("Swiping article to perform deletion")
     public void swipeByArticleToDelete(String article_title)
     {
         this.waitForArticleToAppearByTitle(article_title);
@@ -85,6 +92,8 @@ public abstract class MyListsPageObject extends MainPageObject{
         this.waitForArticleToDisappearByTitle(article_title);
 
     }
+
+    @Step("Click article to my list")
     public void clickArticleToMyList(String article_title)
     {
         String article_xpath = getSavedArticleXpathByTitle(article_title);
@@ -95,10 +104,12 @@ public abstract class MyListsPageObject extends MainPageObject{
         );
     }
 
+    @Step("Closing Sync Overlay")
     public void closeSyncOverlay(){
         this.waitForElementAndClick(CLOSE_SYNC_OVERLAY_BUTTON, "Close button not found on Sync overlay", 5);
     }
 
+    @Step("Delete article from list")
     public void deleteArticleFromList(String article_title){
         String button_xpath = getDeleteButtonFromList(article_title);
         this.waitForElementAndClick(button_xpath, "Close button not found on Sync overlay", 5);

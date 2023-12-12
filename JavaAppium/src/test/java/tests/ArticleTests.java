@@ -1,21 +1,27 @@
 package tests;
 
+import io.qameta.allure.*;
+import io.qameta.allure.junit4.DisplayName;
+import io.qameta.allure.junit4.Tag;
+import io.qameta.allure.junit4.Tags;
 import lib.CoreTestCase;
-import lib.ui.*;
-import org.junit.Test;
-import lib.ui.factories.SearchPageObjectFactory;
+import lib.ui.ArticlePageObject;
+import lib.ui.MainPageObject;
+import lib.ui.SearchPageObject;
 import lib.ui.factories.ArticlePageObjectFactory;
+import lib.ui.factories.SearchPageObjectFactory;
+import org.junit.Test;
 
+@Epic("Tests for articles")
 public class ArticleTests extends CoreTestCase
 {
-    private lib.ui.MainPageObject MainPageObject;
-    protected void setUp() throws Exception
-    {
-        super.setUp();
-
-        MainPageObject = new MainPageObject(driver);
-    }
     @Test
+    @Features(value = {@Feature(value = "Search"), @Feature(value = "Article")})
+    @Tags(value = {@Tag(value = "Acceptance"), @Tag(value = "Regression")})
+    @DisplayName("Compare article title with expected value")
+    @Description("We open 'Object-oriented programming language' article and make sure the title is expected")
+    @Step("Starting testCompareArticleTitle")
+    @Severity(value = SeverityLevel.BLOCKER)
     public void testCompareArticleTitle() {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
@@ -31,15 +37,15 @@ public class ArticleTests extends CoreTestCase
                 ArticlePageObject.descriptionOfArticle(),
                 article_title,
                 "Take another text");
-
-//        assertEquals(
-//                "We see unexpected title",
-//                "Java (programming language)",
-//                article_title
-//        );
     }
 
     @Test
+    @Features(value = {@Feature(value = "Search"), @Feature(value = "Article")})
+    @Tags(value = {@Tag(value = "Regression")})
+    @DisplayName("Swipe article to the footer")
+    @Description("We open an article and swipe it to the footer")
+    @Step("Starting testSwipeArticle")
+    @Severity(value = SeverityLevel.MINOR)
     public void testSwipeArticle() {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
@@ -55,6 +61,12 @@ public class ArticleTests extends CoreTestCase
     }
 
     @Test
+    @Features(value = {@Feature(value = "Search"), @Feature(value = "Article")})
+    @Tags(value = { @Tag(value = "Regression")})
+    @DisplayName("Asserting article has title with expected value")
+    @Description("Open Wiki; Check search input; Enter search query and perform search; Open the article from the search result page. Check article has title with expected value.")
+    @Step("Starting testArticleHasTitleElement")
+    @Severity(value = SeverityLevel.NORMAL)
     public void testAssertTittle()
     {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
